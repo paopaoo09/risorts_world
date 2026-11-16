@@ -5,3 +5,53 @@
 [x-cloak] {
     display: none;
 }
+.acr-footer {
+    --acr-navy: #1d3b6e;
+    position: relative;
+    color: var(--acr-navy);
+    font-family: "Georgia", "Times New Roman", serif;
+    background:
+        linear-gradient(
+            90deg,
+            rgba(232, 242, 250, 0.96) 0%,
+            rgba(232, 242, 250, 0.85) 50%,
+            rgba(232, 242, 250, 0.25) 100%
+        ),
+        url("/images/footerbg.png") center / cover no-repeat;
+}
+
+.acr-footer-logo {
+    max-height: 90px;
+}
+
+.acr-footer-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--acr-navy);
+    margin-bottom: 0.75rem;
+}
+
+.acr-footer-list,
+.acr-footer-list a {
+    font-size: 0.8rem;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--acr-navy);
+    text-decoration: none;
+}
+
+.acr-footer-list a:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+}
+
+.acr-footer-divider {
+    border-color: var(--acr-navy);
+    opacity: 0.6;
+}
+
+.acr-footer-copy {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--acr-navy);
+}

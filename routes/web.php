@@ -6,11 +6,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/footer', function () {
+    return view('footer-preview');
+});
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
+    
 ])->group(function () {
     Route::get('/dashboard', function (Request $request) {
         return redirect()->route($request->user()->dashboardRoute());

@@ -1,15 +1,31 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('My Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.main')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-6 text-gray-900 dark:text-gray-100">
-                {{ __('Welcome, :name. View and manage your reservations here.', ['name' => Auth::user()->full_name]) }}
+@section('title', __('My Dashboard'))
+
+@section('content')
+    <h1 class="h3 mb-0">{{ __('My Dashboard') }}</h1>
+    <p class="text-body-secondary">
+        {{ __('Welcome, :name. View and manage your reservations here.', ['name' => Auth::user()->full_name]) }}
+    </p>
+
+    <div class="row g-3">
+        <div class="col-sm-6 col-lg-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="text-body-secondary small text-uppercase">{{ __('My reservations') }}</div>
+                    <div class="fs-2 fw-semibold">{{ Auth::user()->reservations()->count() }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-lg-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="text-body-secondary small text-uppercase">{{ __('Upcoming stays') }}</div>
+                    <div class="fs-2 fw-semibold">
+                        {{ Auth::user()->reservations()->whereDate('check_in_date', '>=', today())->count() }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</x-app-layout>
+@endsection

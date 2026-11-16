@@ -1,0 +1,9 @@
+@import 'variables';
+@import 'bootstrap/scss/bootstrap';
+
+// App-specific styles
+
+.hero {
+    background: linear-gradient(135deg, rgba($primary, .9), rgba(darken($primary, 15%), .95));
+    color: $white;
+}

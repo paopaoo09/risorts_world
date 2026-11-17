@@ -1,15 +1,32 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Admin Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.main')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-6 text-gray-900 dark:text-gray-100">
+@section('title', __('Admin Dashboard'))
+
+@section('content')
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-0">{{ __('Admin Dashboard') }}</h1>
+            <p class="text-body-secondary mb-0">
                 {{ __('Welcome, :name. You are signed in as an administrator.', ['name' => Auth::user()->full_name]) }}
-            </div>
+            </p>
         </div>
     </div>
-</x-app-layout>
+
+    <div class="row g-3">
+        @foreach ([
+            __('Users') => \App\Models\User::count(),
+            __('Accommodations') => \App\Models\Accommodation::count(),
+            __('Packages') => \App\Models\Package::count(),
+            __('Reservations') => \App\Models\Reservation::count(),
+        ] as $label => $count)
+            <div class="col-sm-6 col-lg-3">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="text-body-secondary small text-uppercase">{{ $label }}</div>
+                        <div class="fs-2 fw-semibold">{{ $count }}</div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
+@endsection

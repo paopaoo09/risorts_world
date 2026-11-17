@@ -1,4 +1,4 @@
-<footer class="acr-footer">
+<footer class="acr-footer" style="--acr-footer-img: url('{{ asset('images/footerbg.png') }}')">
     <div class="container position-relative">
         <div class="row gy-4 pt-5 pb-4 align-items-start">
             <div class="col-12 col-md-3 text-center text-md-start">
@@ -34,8 +34,7 @@
                 <h5 class="acr-footer-title">Guest Information</h5>
                 <ul class="list-unstyled acr-footer-list mb-0">
                     <li><a href="{{ url('/generalpolicy') }}">General policy</a></li>
-                    <li><a href="{{ url('/privacypolicy') }}">Privacy & Policy</a></li>
-                </ul>
+                    <li><a href="{{ url('/privacypolicy') }}">Privacy &amp; Policy</a></li>                </ul>
             </div>
         </div>
 

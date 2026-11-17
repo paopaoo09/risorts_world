@@ -9,7 +9,9 @@
     --acr-navy: #1d3b6e;
     position: relative;
     color: var(--acr-navy);
+    overflow-x: hidden;
     font-family: "Georgia", "Times New Roman", serif;
+    background-color: #e8f2fa;
     background:
         linear-gradient(
             90deg,
@@ -17,11 +19,14 @@
             rgba(232, 242, 250, 0.85) 50%,
             rgba(232, 242, 250, 0.25) 100%
         ),
-        url("/images/footerbg.png") center / cover no-repeat;
+        url("/public/images/footerbg.png") center / cover no-repeat;
 }
-
 .acr-footer-logo {
-    max-height: 90px;
+    display: block;
+    width: 200px;
+    max-width: 100%;
+    height: auto;
+    margin-top: -30px;
 }
 
 .acr-footer-title {
@@ -38,6 +43,7 @@
     line-height: 1.6;
     color: var(--acr-navy);
     text-decoration: none;
+    overflow-wrap: anywhere;
 }
 
 .acr-footer-list a:hover {
@@ -54,4 +60,16 @@
     font-size: 0.7rem;
     font-weight: 700;
     color: var(--acr-navy);
+}
+
+/* ---------- Mobile ng footer---------- */
+@media (max-width: 767.98px) {
+    .acr-footer {
+        background-image: url("/public/images/footerbg.png");
+        background-position: center no-repeat;
+    }
+    .acr-footer-logo {
+        width: 160px;
+        margin-top: 0;
+    }
 }

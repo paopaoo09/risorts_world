@@ -24,6 +24,7 @@
     </section>
 @endsection
 
+
 @section('content')
     <div class="row g-4 py-3">
         <div class="col-md-4">

@@ -1,27 +1,35 @@
-<x-auth-shell title="Verify your email" subtitle="We've sent a verification link to your email. Click it to activate your account and start booking.">
-    <div class="mx-auto mt-6 grid h-16 w-16 place-items-center rounded-full bg-[#1d3b6e]/10 text-[#1d3b6e]">
-        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 9v.906a2.25 2.25 0 0 1-1.183 1.981l-6.478 3.488M2.25 9v.906a2.25 2.25 0 0 0 1.183 1.981l6.478 3.488m8.839 2.51-4.66-2.51m0 0-1.023-.55a2.25 2.25 0 0 0-2.134 0l-1.022.55m0 0-4.661 2.51m16.5 1.615a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V8.844a2.25 2.25 0 0 1 1.183-1.981l7.5-4.039a2.25 2.25 0 0 1 2.134 0l7.5 4.039a2.25 2.25 0 0 1 1.183 1.98V19.5Z"/></svg>
-    </div>
+<x-auth-card title="Check your inbox" page-title="Verify Email" icon="mail">
+    <p class="mx-auto mt-2 max-w-sm text-center text-[15px] leading-relaxed text-slate-500">
+        We sent a verification link to
+        <span class="font-semibold text-slate-800">{{ Auth::user()->email }}</span>.
+        Click it to activate your account and start booking your stay.
+    </p>
 
     @if (session('status') == 'verification-link-sent')
-        <div class="mt-5 rounded-2xl bg-green-50 px-4 py-2.5 text-center text-sm font-medium text-green-700">
-            A new verification link has been sent to your email address.
+        <div role="status" class="mt-5 rounded-2xl border border-green-600/20 bg-green-50 px-4 py-3 text-center text-sm text-green-800">
+            A new verification link is on its way.
         </div>
     @endif
 
-    <form method="POST" action="{{ route('verification.send') }}" class="mt-6">
+    <form method="POST" action="{{ route('verification.send') }}" x-data="{ busy: false }" @submit="busy = true" class="mt-6">
         @csrf
-        <button type="submit" class="auth-btn">Resend Verification Email</button>
+        <x-auth-submit busy-text="Sending…" :arrow="false">Resend Verification Email</x-auth-submit>
     </form>
 
-    <p class="mt-3 text-center text-sm text-slate-500">Didn't get it? Check your spam folder first.</p>
+    <ul class="mt-6 space-y-2 rounded-2xl bg-slate-50 px-5 py-4 text-sm text-slate-600">
+        <li class="flex gap-2"><span class="text-[#9b111e]">&bull;</span> Check your spam or promotions folder.</li>
+        <li class="flex gap-2"><span class="text-[#9b111e]">&bull;</span> The link expires after 60 minutes.</li>
+        <li class="flex gap-2"><span class="text-[#9b111e]">&bull;</span> Wrong email? Update it in your profile.</li>
+    </ul>
 
-    <div class="mt-6 flex items-center justify-center gap-4 text-sm">
-        <a href="{{ route('profile.show') }}" class="auth-link">Edit Profile</a>
-        <span class="h-4 w-px bg-slate-300"></span>
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit" class="auth-link">Log Out</button>
-        </form>
-    </div>
-</x-auth-shell>
+    <x-slot:footer>
+        <div class="flex items-center justify-center gap-4">
+            <a href="{{ route('profile.show') }}" class="font-medium text-[#1d3b6e] hover:text-[#9b111e]">Edit Profile</a>
+            <span class="h-4 w-px bg-slate-300"></span>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="font-medium text-[#1d3b6e] hover:text-[#9b111e]">Log Out</button>
+            </form>
+        </div>
+    </x-slot:footer>
+</x-auth-card>

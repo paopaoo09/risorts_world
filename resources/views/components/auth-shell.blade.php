@@ -29,15 +29,15 @@
 
             {{-- ============ LEFT: form ============ --}}
             <div class="relative flex flex-col lg:overflow-y-auto {{ $reverse ? 'lg:order-2' : '' }}">
-                {{-- Soft petal decoration in the bottom corner (mirrored when reversed) --}}
+                {{-- Same soft glows as the card pages (mirrored when reversed) --}}
                 <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden {{ $reverse ? '-scale-x-100' : '' }}">
-                    <div class="absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-[radial-gradient(circle_at_center,_#fbd5d5_0%,_#fde8e8_45%,_transparent_70%)] opacity-80"></div>
-                    <svg class="absolute bottom-0 left-0 w-2/3" viewBox="0 0 400 40" preserveAspectRatio="none">
-                        <path d="M0 40 C 120 10, 260 28, 400 40 Z" fill="#9b111e" opacity=".9"/>
-                    </svg>
+                    <div class="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-[radial-gradient(circle,_#fbd5d5_0%,_transparent_65%)] opacity-60"></div>
+                    <div class="absolute -bottom-40 -right-32 h-96 w-96 rounded-full bg-[radial-gradient(circle,_#dbe5f3_0%,_transparent_65%)] opacity-70"></div>
                 </div>
 
-                <div class="relative flex flex-1 items-center justify-center px-6 py-8 sm:px-12 lg:py-5">
+                <x-auth-wave />
+
+                <div class="relative flex flex-1 items-center justify-center px-6 pt-8 pb-24 sm:px-12 lg:pt-5 lg:pb-20">
                     <div class="auth-rise w-full {{ $compact ? 'max-w-[460px]' : 'max-w-[400px]' }}">
                         <a href="{{ url('/') }}" class="mx-auto block w-fit">
                             {{-- One logo size on every auth page --}}
@@ -52,23 +52,7 @@
                             @endif
                         </div>
 
-                        @if ($errors->any())
-                            <div role="alert" class="mt-4 flex gap-3 rounded-2xl border border-[#9b111e]/20 bg-[#fdf2f2] px-4 py-3 text-sm text-[#7a0d17]">
-                                <svg class="mt-0.5 h-4 w-4 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0Zm-8-5a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0v-4.5A.75.75 0 0 1 10 5Zm0 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" clip-rule="evenodd"/></svg>
-                                <ul class="space-y-0.5">
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-
-                        @if (session('status') && session('status') !== 'verification-link-sent')
-                            <div role="status" class="mt-4 flex gap-3 rounded-2xl border border-green-600/20 bg-green-50 px-4 py-3 text-sm text-green-800">
-                                <svg class="mt-0.5 h-4 w-4 shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.86-9.81a.75.75 0 0 0-1.22-.88l-3.24 4.53-1.62-1.62a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.1l3.75-5.24Z" clip-rule="evenodd"/></svg>
-                                {{ session('status') }}
-                            </div>
-                        @endif
+                        <x-auth-alerts />
 
                         {{ $slot }}
                     </div>

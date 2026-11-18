@@ -1,48 +1,34 @@
-<x-guest-layout>
-    <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
+<x-auth-shell title="Welcome back" page-title="Sign In" subtitle="Please enter your account details">
+    <form method="POST" action="{{ route('login') }}" x-data="{ busy: false }" @submit="busy = true" class="mt-6 space-y-4 [@media(max-height:820px)]:mt-4 [@media(max-height:820px)]:space-y-3">
+        @csrf
 
-        <x-validation-errors class="mb-4" />
+        <div>
+            <x-auth-label for="email" icon="mail">Email</x-auth-label>
+            <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username"
+                   placeholder="you@example.com" class="auth-input">
+        </div>
 
-        @session('status')
-            <div class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
-                {{ $value }}
-            </div>
-        @endsession
+        <x-auth-password />
 
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
+        <div class="flex items-center justify-between">
+            <label for="remember_me" class="flex items-center gap-2 text-sm text-slate-700">
+                <input id="remember_me" type="checkbox" name="remember" class="auth-checkbox">
+                Keep me logged in
+            </label>
+            @if (Route::has('password.request'))
+                <a href="{{ route('password.request') }}" class="auth-link text-sm">Forgot Password?</a>
+            @endif
+        </div>
 
-            <div>
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            </div>
+        <x-auth-submit busy-text="Signing in…">Sign In</x-auth-submit>
+    </form>
 
-            <div class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
-            </div>
+    <x-auth-google />
 
-            <div class="block mt-4">
-                <label for="remember_me" class="flex items-center">
-                    <x-checkbox id="remember_me" name="remember" />
-                    <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
-                </label>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
-
-                <x-button class="ms-4">
-                    {{ __('Log in') }}
-                </x-button>
-            </div>
-        </form>
-    </x-authentication-card>
-</x-guest-layout>
+    @if (Route::has('register'))
+        <p class="mt-5 text-center text-sm text-slate-700 [@media(max-height:820px)]:mt-3">
+            Don't have an account?
+            <a href="{{ route('register') }}" class="auth-link font-semibold">Sign Up</a>
+        </p>
+    @endif
+</x-auth-shell>

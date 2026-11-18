@@ -1,45 +1,35 @@
-<x-guest-layout>
-    <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
+<x-auth-card title="Check your inbox" page-title="Verify Email" icon="mail">
+    <p class="mx-auto mt-2 max-w-sm text-center text-[15px] leading-relaxed text-slate-500">
+        We sent a verification link to
+        <span class="font-semibold text-slate-800">{{ Auth::user()->email }}</span>.
+        Click it to activate your account and start booking your stay.
+    </p>
 
-        <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-            {{ __('Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
+    @if (session('status') == 'verification-link-sent')
+        <div role="status" class="mt-5 rounded-2xl border border-green-600/20 bg-green-50 px-4 py-3 text-center text-sm text-green-800">
+            A new verification link is on its way.
         </div>
+    @endif
 
-        @if (session('status') == 'verification-link-sent')
-            <div class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
-                {{ __('A new verification link has been sent to the email address you provided in your profile settings.') }}
-            </div>
-        @endif
+    <form method="POST" action="{{ route('verification.send') }}" x-data="{ busy: false }" @submit="busy = true" class="mt-6">
+        @csrf
+        <x-auth-submit busy-text="Sending…" :arrow="false">Resend Verification Email</x-auth-submit>
+    </form>
 
-        <div class="mt-4 flex items-center justify-between">
-            <form method="POST" action="{{ route('verification.send') }}">
+    <ul class="mt-6 space-y-2 rounded-2xl bg-slate-50 px-5 py-4 text-sm text-slate-600">
+        <li class="flex gap-2"><span class="text-[#9b111e]">&bull;</span> Check your spam or promotions folder.</li>
+        <li class="flex gap-2"><span class="text-[#9b111e]">&bull;</span> The link expires after 60 minutes.</li>
+        <li class="flex gap-2"><span class="text-[#9b111e]">&bull;</span> Wrong email? Update it in your profile.</li>
+    </ul>
+
+    <x-slot:footer>
+        <div class="flex items-center justify-center gap-4">
+            <a href="{{ route('profile.show') }}" class="font-medium text-[#1d3b6e] hover:text-[#9b111e]">Edit Profile</a>
+            <span class="h-4 w-px bg-slate-300"></span>
+            <form method="POST" action="{{ route('logout') }}">
                 @csrf
-
-                <div>
-                    <x-button type="submit">
-                        {{ __('Resend Verification Email') }}
-                    </x-button>
-                </div>
+                <button type="submit" class="font-medium text-[#1d3b6e] hover:text-[#9b111e]">Log Out</button>
             </form>
-
-            <div>
-                <a
-                    href="{{ route('profile.show') }}"
-                    class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                >
-                    {{ __('Edit Profile') }}</a>
-
-                <form method="POST" action="{{ route('logout') }}" class="inline">
-                    @csrf
-
-                    <button type="submit" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800 ms-2">
-                        {{ __('Log Out') }}
-                    </button>
-                </form>
-            </div>
         </div>
-    </x-authentication-card>
-</x-guest-layout>
+    </x-slot:footer>
+</x-auth-card>

@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     @vite('resources/css/app.css')
 </head>
+<x-navigation.navi />
 <body class="d-flex flex-column min-vh-100">
     <main class="flex-grow-1 container py-5">
         <h1>Page content goes here</h1>
